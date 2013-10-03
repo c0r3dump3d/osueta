@@ -58,3 +58,10 @@ Example:
 ========
 
         ./osueta.py -H 192.168.1.6 -p 22 -U root -d 30 -v yes
+
+Authors:
+========
+
+        c0r3dump | coredump<@>autistici.org
+        rofen | rofen<@>gmx.de
+
