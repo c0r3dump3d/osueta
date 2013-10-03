@@ -32,7 +32,7 @@ Installing:
 ===========
 
         # apt-get install python-ipy python-nmap python-paramiko
-        git clone https://github.com/osueta/osueta.git
+        git clone https://github.com/c0r3dump3d/osueta.git 
 
 
 Usage:
