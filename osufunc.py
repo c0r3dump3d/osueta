@@ -12,7 +12,7 @@ Authors:
         c0r3dump | coredump<@>autistici.org
         rofen | rofen<@>gmx.de
 
-Osueta project site: https://github.com/
+Osueta project site: https://github.com/c0r3dump3d/osueta 
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
