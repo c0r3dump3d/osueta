@@ -26,6 +26,10 @@ What's OSUETA?
         http://seclists.org/fulldisclosure/2013/Jul/88
         http://www.devconsole.info/?p=341
 
+Advice:
+=======
+
+	The authors disclaims all responsibility in the use of this tool.
 
 
 Installing:
