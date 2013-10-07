@@ -60,6 +60,17 @@ Usage:
   	--dos DOS   Try to make a DOS attack (default no)
   	-t THREADS  Threads for the DOS attack (default 5)
 
+
+Example:
+
+	* A single user enumeration attempt with username variations:
+
+                ./osueta.py -H 192.168.1.6 -p 22 -U root -d 30 -v yes 
+
+        * A single user enumeration attempt with no user variations a dos attack:
+
+                ./osueta.py -H 192.168.1.6 -p 22 -U root -d 30 -v no --dos yes
+
 Authors:
 
         c0r3dump | coredump<@>autistici.org
