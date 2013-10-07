@@ -20,16 +20,20 @@
 What's OSUETA?
 ==============
 
-        Osueta it's a simple Python script to exploit the OpenSSH User Enumeration Timing Attack:
+        Osueta it's a simple Python script to exploit the OpenSSH User Enumeration Timing Attack, 
+        present in OpenSSh versions 5.* and 6.*. The script has the ability to make variations
+        of the username employed in the bruteforce attack, and the possibility to establish
+        a DOS condition in the OpenSSh server. 
 
         http://cureblog.de/openssh-user-enumeration-time-based-attack/
-        http://seclists.org/fulldisclosure/2013/Jul/88
-        http://www.devconsole.info/?p=341
+        http://seclists.org/fulldisclosure/2013/Jul/88 
+        http://www.devconsole.info/?p=381
+        http://www.devconsole.info/?p=382
 
 Advice:
 =======
 
-	The authors disclaims all responsibility in the use of this tool.
+	Like others offensive tools, the authors disclaims all responsibility in the use of this script.
 
 
 Installing:
@@ -42,18 +46,22 @@ Installing:
 Usage:
 ======
 
-        osueta.py [-h] [-H HOST] [-p PORT] [-L UFILE] [-U USER] [-d DELAY]
-                 [-v VARI]
+	usage: osueta.py [-h] [-H HOST] [-p PORT] [-L UFILE] [-U USER] [-d DELAY]
+                 [-v VARI] [--dos DOS] [-t THREADS]
 
-        optional arguments:
-                -h, --help  show this help message and exit
-                -H HOST     Host to attack
-                -p PORT     Host port
-                -L UFILE    Username list file
-                -U USER     Username
-                -d DELAY    Time delay in seconds
-                -v VARI     Make variations of the user name (default yes)
-                
+	OpenSSH User Enumeration Time-Based Attack
+
+	optional arguments:
+  	-h, --help  show this help message and exit
+  	-H HOST     Host to attack
+  	-p PORT     Host port
+  	-L UFILE    Username list file
+  	-U USER     Only use a single username
+  	-d DELAY    Time delay in seconds
+  	-v VARI     Make variations of the username (default yes)
+  	--dos DOS   Try to make a DOS attack (default no)
+  	-t THREADS  Threads for the DOS attack (default 5)
+
 Example:
 ========
 

