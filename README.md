@@ -65,7 +65,14 @@ Usage:
 Example:
 ========
 
-        ./osueta.py -H 192.168.1.6 -p 22 -U root -d 30 -v yes
+	* A single user enumeration attempt with username variations:
+
+	        ./osueta.py -H 192.168.1.6 -p 22 -U root -d 30 -v yes
+
+	* A single user enumeration attempt with no user variations a dos attack:
+
+		
+	        ./osueta.py -H 192.168.1.6 -p 22 -U root -d 30 -v no --dos yes
 
 Authors:
 ========

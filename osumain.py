@@ -165,7 +165,7 @@ def main():
 							print entry[0] + "                      " + str(entry[3])
 		if dos == 'yes':
 			print 
-			print "Trying to establish a DOS condition with user " + userfdos + " and " + str(threads) +  " threads..."
+			print "Trying to establish a DOS condition with user " + userfdos + " and " + str(threads) +  " threads ..."
 			print "If you see some error message probably the attack has succeeded. Press [Ctrl-Z] to stop."
 
 			while 1 : 
