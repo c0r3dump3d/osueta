@@ -39,7 +39,8 @@ from IPy import IP
 def main():
  
 	parse = argparse.ArgumentParser(description='OpenSSH User Enumeration Time-Based Attack')
-	parse.add_argument('-H', action='store', dest='host', help='Host to attack')
+	parse.add_argument('-H', action='store', dest='host', help='Host ip to attack')
+	parse.add_argument('-f', action='store', dest='fqdn', help='FQDN to attack')
 	parse.add_argument('-p', action='store', dest='port', help='Host port')
 	parse.add_argument('-L', action='store', dest='ufile', help='Username list file')
 	parse.add_argument('-U', action='store', dest='user', help='Only use a single username')
@@ -50,7 +51,7 @@ def main():
 
 	argus=parse.parse_args()
 
-	if argus.host == None:
+	if argus.host == None and argus.fqdn == None:
  		parse.print_help()
  		exit
 	elif argus.port == None:
@@ -66,7 +67,15 @@ def main():
 		parse.print_help()
 		exit
 	else:
-		host = argus.host
+		if argus.host != None:
+			host = argus.host
+		if argus.fqdn != None:
+			try:
+				fqdn = argus.fqdn
+				host = socket.gethostbyname(fqdn)
+			except socket.gaierror, err:
+				print "Cannot resolve hostname: ", name, err
+				exit(1)
 		port = argus.port
  		defTime = int(argus.delay)
  		vari = argus.vari
