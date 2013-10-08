@@ -21,9 +21,9 @@ What's OSUETA?
 ==============
 
         Osueta it's a simple Python script to exploit the OpenSSH User Enumeration Timing Attack, 
-        present in OpenSSh versions 5.* and 6.*. The script has the ability to make variations
+        present in OpenSSH versions 5.* and 6.*. The script has the ability to make variations
         of the username employed in the bruteforce attack, and the possibility to establish
-        a DOS condition in the OpenSSh server. 
+        a DOS condition in the OpenSSH server. 
 
         http://cureblog.de/openssh-user-enumeration-time-based-attack/
         http://seclists.org/fulldisclosure/2013/Jul/88 
