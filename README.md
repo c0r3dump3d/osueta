@@ -54,6 +54,7 @@ Usage:
 	optional arguments:
   	-h, --help  show this help message and exit
   	-H HOST     Host to attack
+	-f FQDN     FQDN to attack
   	-p PORT     Host port
   	-L UFILE    Username list file
   	-U USER     Only use a single username

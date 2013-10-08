@@ -157,8 +157,16 @@ def sshBanner(host,port):
 		print "Are you sure that it's a ssh server?"
 		print "Check with \"nmap -PN -sV -p 22 \" if you see something strange."
 		exit(1)
-   
-	return banner	
+
+	bannervuln = ['OpenSSH 5', 'OpenSSH 6']
+	if banner[0:9] in bannervuln:
+		print "This version is vulnerable, we continue with the brutefroce attack ..."
+		return banner	
+	else:
+		print "This version is not vulnerable."
+		print "Nothing to do."
+		exit(1)
+
 
 def createUserNameVariationsFor(userName):
 	specialCharacters = [".","_"]
