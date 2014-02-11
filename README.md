@@ -46,22 +46,26 @@ Installing:
 Usage:
 ======
 
-	usage: osueta.py [-h] [-H HOST] [-p PORT] [-L UFILE] [-U USER] [-d DELAY]
-                 [-v VARI] [--dos DOS] [-t THREADS]
+	usage: osueta.py [-h] [-H HOST] [-k HFILE] [-f FQDN] [-p PORT] [-L UFILE]
+                 [-U USER] [-d DELAY] [-v VARI] [-o OUTP] [--dos DOS]
+                 [-t THREADS]
 
-	OpenSSH User Enumeration Time-Based Attack
+OpenSSH User Enumeration Time-Based Attack
 
-	optional arguments:
-  	-h, --help  show this help message and exit
-  	-H HOST     Host to attack
-	-f FQDN     FQDN to attack
-  	-p PORT     Host port
-  	-L UFILE    Username list file
-  	-U USER     Only use a single username
-  	-d DELAY    Time delay in seconds
-  	-v VARI     Make variations of the username (default yes)
-  	--dos DOS   Try to make a DOS attack (default no)
-  	-t THREADS  Threads for the DOS attack (default 5)
+optional arguments:
+  -h, --help  show this help message and exit
+  -H HOST     Host ip or CIDR netblock to attack.
+  -k HFILE    Host list in a file.
+  -f FQDN     FQDN to attack.
+  -p PORT     Host port.
+  -L UFILE    Username list file.
+  -U USER     Only use a single username.
+  -d DELAY    Time delay in seconds (default 20 seconds).
+  -v VARI     Make variations of the username (default yes).
+  -o OUTP     Output file with positive results.
+  --dos DOS   Try to make a DOS attack (default no).
+  -t THREADS  Threads for the DOS attack (default 5).
+
 
 Example:
 ========
@@ -74,6 +78,9 @@ Example:
 
 	        ./osueta.py -H 192.168.1.6 -p 22 -U root -d 30 -v no --dos yes
 
+	* Scanning a C class network with only one user:
+	
+		./osueta -H 192.168.1.0/24 -p 22 -U root -v no 
 Authors:
 ========
 
