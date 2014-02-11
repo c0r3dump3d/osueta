@@ -58,7 +58,7 @@ def main():
 	welcome()
 	print "Starting OSUETA v0.5 (https://github.com/) at " + time.strftime("%x") + " " + time.strftime("%X")
 	print
-
+	start_time = time.time()
 	argus=parse.parse_args()
 
 	if argus.host == None and argus.fqdn == None and argus.hfile == None:
