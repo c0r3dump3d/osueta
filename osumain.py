@@ -56,7 +56,7 @@ def main():
 	parse.add_argument('--dos', action='store', dest='dos',default = 'no', help='Try to make a DOS attack (default no).')
 	parse.add_argument('-t', action='store', dest='threads',default = '5', help='Threads for the DOS attack (default 5).')
 	welcome()
-	print "Starting OSUETA v0.5 (https://github.com/) at " + time.strftime("%x") + " " + time.strftime("%X")
+	print "Starting OSUETA v0.5 (https://github.com/c0r3dump3d/osueta) at " + time.strftime("%x") + " " + time.strftime("%X")
 	print
 	start_time = time.time()
 	argus=parse.parse_args()
@@ -78,7 +78,7 @@ def main():
 		numhost = 0
 		if argus.outp != None:
 			fileOutput = open(argus.outp,'w')
-			fileOutput.write("OSUETA v0.5 (https://github.com/) at " + time.strftime("%x") + " " + time.strftime("%X") + "\n")
+			fileOutput.write("OSUETA v0.5 (https://github.com/c0r3dump3d/osueta) at " + time.strftime("%x") + " " + time.strftime("%X") + "\n")
 			fileOutput.write("\n")			
 			fileOutput.write("USER(s) FOUND:\n")
 			fileOutput.write("\n")
