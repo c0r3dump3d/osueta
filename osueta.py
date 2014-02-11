@@ -4,6 +4,8 @@
 __license__="""
 osueta (OpenSSH User Enumeration Timing Attack)
 
+Version 0.5
+
 A simple Python script to exploit the OpenSSH User Enumeration Timing Attack:
 
 http://cureblog.de/openssh-user-enumeration-time-based-attack/
