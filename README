@@ -74,6 +74,9 @@ Example:
 
                 ./osueta.py -H 192.168.1.6 -p 22 -U root -d 30 -v no --dos yes
 
+	* Scanning a C class network with only one user:
+
+    		./osueta -H 192.168.1.0/24 -p 22 -U root -v no
 Authors:
 
         c0r3dump | coredump<@>autistici.org
