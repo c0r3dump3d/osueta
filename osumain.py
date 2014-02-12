@@ -140,7 +140,7 @@ def main():
 			exit(1)
 
 		threads = int(argus.threads)
-		print "[+] " + str(numhost) + " host(s). It's better a previous fast scan ..."
+		print "[+] " + str(numhost) + " host(s). It's better a previous fast scan with nmap ..."
 		print
 		hoststate={}
 		userfdos=None
