@@ -57,18 +57,18 @@ def sshTime(host,port,user,sock,defTime):
 
 	except paramiko.SSHException: 
 		print "Unable to connect to host"
-		exit(1)   
+		return  
     
 	try:
 		para.connect(username=user)
 
 	except EOFError,e:
 		print 'Error: %s' % e
-		exit(1)   
+		return  
 
 	except paramiko.SSHException,e:
         	print 'Error: %s' % e
-        	exit(1)   
+        	return   
 
     	passwd = 'A'*39000
 
