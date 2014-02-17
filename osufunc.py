@@ -204,6 +204,7 @@ def prepareUserNames(userFile,vari):
 			userNames.append(user)
 			userNames = list(set(userNames))
 		return userNames
+		
 def welcome():
     
 	print """
@@ -230,3 +231,19 @@ def welcome():
         *                                                                         *
         ***************************************************************************
         """ 
+        
+def print_success(foundUser, banner):
+	if len(foundUser) == 0:
+		print "No users found." 
+		exit(1)
+	else:	 
+		print
+		print "Server version: " + banner
+		print
+		print "Users found      Time delay in seconds"
+		print "--------------------------------------"
+		for entry in foundUser:
+			if entry != -1:
+				userfdos = entry[0]
+				print entry[0] + "                      " + str(entry[3])
+	
