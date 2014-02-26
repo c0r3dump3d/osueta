@@ -86,7 +86,7 @@ Example:
 Authors:
 ========
 
-        c0r3dump | coredump<@>autistici.org
+        c0r3dump3d | coredump<@>autistici.org
         rofen | rofen<@>gmx.de
         jnieto | http://www.behindthefirewalls.com/
 
