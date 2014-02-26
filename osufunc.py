@@ -3,14 +3,17 @@
 __license__="""
 osueta (OpenSSH User Enumeration Timing Attack)
 
+Version 0.6
+
 A simple Python script to exploit the OpenSSH User Enumeration Timing Attack:
 
-http://cureblog.de/openssh-user-enumeration-time-based-attack/
-http://seclists.org/fulldisclosure/2013/Jul/88 
+	http://cureblog.de/openssh-user-enumeration-time-based-attack/
+	http://seclists.org/fulldisclosure/2013/Jul/88 
 
 Authors:
         c0r3dump | coredump<@>autistici.org
         rofen | rofen<@>gmx.de
+	jnieto | http://www.behindthefirewalls.com/
 
 Osueta project site: https://github.com/c0r3dump3d/osueta 
 
@@ -193,7 +196,8 @@ def prepareUserNames(userFile,vari):
             		user = line[0]
             		userNames = userNames + createUserNameVariationsFor(user)
         		userNames = list(set(userNames))
-        		print "Generated %s variations from %s names" % (len(userNames), lines)
+			print 
+        		print "[+] Generated %s variations from %s names" % (len(userNames), lines)
         	return userNames
 
 	else:
@@ -234,7 +238,7 @@ def welcome():
         
 def print_success(foundUser, banner):
 	if len(foundUser) == 0:
-		print "No users found." 
+		print "No user(s) found." 
 		exit(1)
 	else:	 
 		print

@@ -47,26 +47,26 @@ Installing:
 
 Usage:
 ======
-
 	usage: osueta.py [-h] [-H HOST] [-k HFILE] [-f FQDN] [-p PORT] [-L UFILE]
-                 [-U USER] [-d DELAY] [-v VARI] [-o OUTP] [--dos DOS]
-                 [-t THREADS]
+        	         [-U USER] [-d DELAY] [-v VARI] [-o OUTP] [-c VERS]
+                	 [--dos DOS] [-t THREADS]
 
-	OpenSSH User Enumeration Time-Based Attack
+	OpenSSH User Enumeration Time-Based Attack Python script
 
 	optional arguments:
-	  -h, --help  show this help message and exit
-	  -H HOST     Host ip or CIDR netblock to attack.
-	  -k HFILE    Host list in a file.
-	  -f FQDN     FQDN to attack.
-	  -p PORT     Host port.
-	  -L UFILE    Username list file.
-	  -U USER     Only use a single username.
-	  -d DELAY    Time delay in seconds (default 20 seconds).
-	  -v VARI     Make variations of the username (default yes).
-  	  -o OUTP     Output file with positive results.
-	  --dos DOS   Try to make a DOS attack (default no).
-  	  -t THREADS  Threads for the DOS attack (default 5).
+  	-h, --help  show this help message and exit
+  	-H HOST     Host Ip or CIDR netblock.
+  	-k HFILE    Host list in a file.
+  	-f FQDN     FQDN to attack.
+  	-p PORT     Host port.
+  	-L UFILE    Username list file.
+  	-U USER     Only use a single username.
+  	-d DELAY    Time delay in seconds (default 20 seconds).
+  	-v VARI     Make variations of the username (default yes).
+  	-o OUTP     Output file with positive results.
+  	-c VERS     Check or not the OpenSSH version (default yes).
+  	--dos DOS   Try to make a DOS attack (default no).
+  	-t THREADS  Threads for the DOS attack (default 5).
 
 
 Example:
@@ -88,4 +88,5 @@ Authors:
 
         c0r3dump | coredump<@>autistici.org
         rofen | rofen<@>gmx.de
+	jnieto | http://www.behindthefirewalls.com/
 
