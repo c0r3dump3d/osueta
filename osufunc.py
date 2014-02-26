@@ -239,7 +239,7 @@ def welcome():
 def print_success(foundUser, banner):
 	if len(foundUser) == 0:
 		print "No user(s) found." 
-		exit(1)
+		
 	else:	 
 		print
 		print "Server version: " + banner
