@@ -163,7 +163,7 @@ def main():
 			hoststate[ip]=state
 		if numop > 0:
 			print
-			print '[+] Found ' + str(numop) + ' host with ' + port +' port open.'
+			print '[+] Found ' + str(numop) + ' host with port ' + port +' open.'
 			print
 		else:
 			print
