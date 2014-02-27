@@ -13,7 +13,6 @@ A simple Python2 script to exploit the OpenSSH User Enumeration Timing Attack:
 Authors:
 	c0r3dump3d | coredump<@>autistici.org
 	rofen | rofen<@>gmx.de
-	jnieto | http://www.behindthefirewalls.com/
 
 Osueta project site: https://github.com/c0r3dump3d/osueta 
 

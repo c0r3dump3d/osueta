@@ -32,6 +32,12 @@ What's OSUETA?
         http://www.devconsole.info/?p=493
         http://www.devconsole.info/?p=782
 
+Authors:
+========
+
+        c0r3dump3d | coredump<@>autistici.org
+        rofen | rofen<@>gmx.de
+
 Advice:
 =======
 
@@ -83,10 +89,4 @@ Example:
 	* Scanning a C class network with only one user:
 	
 		./osueta -H 192.168.1.0/24 -p 22 -U root -v no 
-Authors:
-========
-
-        c0r3dump3d | coredump<@>autistici.org
-        rofen | rofen<@>gmx.de
-        jnieto | http://www.behindthefirewalls.com/
 
