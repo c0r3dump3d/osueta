@@ -38,6 +38,8 @@ Authors:
         c0r3dump3d | coredump<@>autistici.org
         rofen | rofen<@>gmx.de
 
+	We want to give the thanks to Javier Nieto from www.behindthefirewalls.com for his support and help.
+
 Advice:
 =======
 
