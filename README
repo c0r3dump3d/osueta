@@ -76,6 +76,7 @@ optional arguments:
   -d DELAY    Time delay in seconds (default 20 seconds).
   -v VARI     Make variations of the username (default yes).
   -o OUTP     Output file with positive results.
+  -l LENGTH   Length of the password in characters (x1000) (default 40).
   -c VERS     Check or not the OpenSSH version (default yes).
   --dos DOS   Try to make a DOS attack (default no).
   -t THREADS  Threads for the DOS attack (default 5).
@@ -94,3 +95,7 @@ Example:
 	* Scanning a C class network with only one user:
 
     		./osueta -H 192.168.1.0/24 -p 22 -U root -v no
+
+	* Scanning a C class network with usernames from a file, delay time 15 seconds and a password of 50000 characters:
+
+                ./osueta -H 192.168.1.0/24 -p 22 -L usernames.txt -v yes -d 15 -l 50
