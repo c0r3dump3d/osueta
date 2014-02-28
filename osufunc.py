@@ -241,7 +241,7 @@ def welcome():
         
 def print_success(foundUser, banner):
 	if len(foundUser) == 0:
-		print "No user(s) found." 
+		print "[-] No user(s) found." 
 		
 	else:	 
 		print
