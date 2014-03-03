@@ -55,7 +55,7 @@ def main():
 	parse.add_argument('-d', action='store', dest='delay', help='Time delay in seconds (default 20 seconds).')
 	parse.add_argument('-v', action='store', dest='vari',default = 'yes', help='Make variations of the username (default yes).')
 	parse.add_argument('-o', action='store', dest='outp', help='Output file with positive results.')
-	parse.add_argument('-l', action='store', dest='length', help='Length of the password in characters (x1000) (default 40).')
+	parse.add_argument('-l', action='store', dest='length', default='40', help='Length of the password in characters (x1000) (default 40).')
 	parse.add_argument('-c', action='store', dest='vers', help='Check or not the OpenSSH version (default yes).')
 	parse.add_argument('--dos', action='store', dest='dos',default = 'no', help='Try to make a DOS attack (default no).')
 	parse.add_argument('-t', action='store', dest='threads',default = '5', help='Threads for the DOS attack (default 5).')
