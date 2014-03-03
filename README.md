@@ -56,8 +56,8 @@ Installing:
 Usage:
 ======
 	usage: osueta.py [-h] [-H HOST] [-k HFILE] [-f FQDN] [-p PORT] [-L UFILE]
-        	         [-U USER] [-d DELAY] [-v VARI] [-o OUTP] [-c VERS]
-                	 [--dos DOS] [-t THREADS]
+                 [-U USER] [-d DELAY] [-v VARI] [-o OUTP] [-l LENGTH]
+                 [-c VERS] [--dos DOS] [-t THREADS]
 
 	OpenSSH User Enumeration Time-Based Attack Python script
 
