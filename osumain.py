@@ -189,7 +189,7 @@ def main():
 						banner = sshBanner(host,port)
 						bannervuln = ['OpenSSH 5', 'OpenSSH 6']
 						if banner[0:9] in bannervuln:
-							print "[++] This version is perhaps vulnerable, we continue with the brutefroce attack ..."
+							print "[++] This version is perhaps vulnerable, we continue with the bruteforce attack ..."
 							print
 							print '==============================================================================='
 							userNames = prepareUserNames(userFile,vari)            
@@ -232,7 +232,7 @@ def main():
 					if vers == 'yes':
 						bannervuln = ['OpenSSH 5', 'OpenSSH 6']
 						if banner[0:9] in bannervuln:
-							print "[++] This version is perhaps vulnerable, we continue with the brutefroce attack ..."
+							print "[++] This version is perhaps vulnerable, we continue with the bruteforce attack ..."
 							print
 							print '==============================================================================='
 							if vari == 'yes':
