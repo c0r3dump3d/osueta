@@ -69,7 +69,7 @@ Usage:
   	-p PORT     Host port.
   	-L UFILE    Username list file.
   	-U USER     Only use a single username.
-  	-d DELAY    Time delay in seconds (default 20 seconds).
+	-d DELAY    Time delay fixed in seconds. If not, delay time is calculated.
   	-v VARI     Make variations of the username (default yes).
   	-o OUTP     Output file with positive results.
 	-l LENGTH   Length of the password in characters (x1000) (default 40).

