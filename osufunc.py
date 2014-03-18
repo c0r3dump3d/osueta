@@ -52,7 +52,7 @@ screenLock = Semaphore(value=1)
 
 def dummySSH(host, port,length):
 	dummyconn = 10 
-	print '[+] %d dummy attemps @%s:%d with random users to test the delay of the server ... ' % (dummyconn,host,int(port))
+	print '[+] %d dummy attempts @%s:%d with random users to test the delay of the server ... ' % (dummyconn,host,int(port))
 	size = 4
 	chars = chars=string.ascii_lowercase + string.digits
 	sumdelay = 0
@@ -99,6 +99,12 @@ def dummySSH(host, port,length):
 		sumdelay = sumdelay + delay
 		sock.close()
 	measure = int(sumdelay/dummyconn)
+	if measure == 0:
+		print
+		print "[-] The calculate delay is lower than 1 second, using 20 seconds by default ..."
+		measure = 2
+		
+		
 	return measure 
 
 	

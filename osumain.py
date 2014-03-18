@@ -120,8 +120,9 @@ def main():
 				fqdn = argus.fqdn
 				host = socket.gethostbyname(fqdn)
 				hosts.append(host)
+				numhost = numhost + 1
 			except socket.gaierror, err:
-				print "[-] Cannot resolve hostname: ", name, err
+				print "[-] Cannot resolve hostname: " + fqdn
 				exit(1)
 		if argus.hfile != None:
 			try:
@@ -194,8 +195,12 @@ def main():
 							print '==============================================================================='
 							if argus.delay == None:
 								delay=dummySSH(host,port,length)
-								defTime=delay*10
-								print "[+] Using a delay of " + str(defTime) + " seconds."
+								if delay != None or delay != 0:
+									defTime=delay*10
+									print "[+] Using a delay of " + str(defTime) + " seconds."
+								else:
+									defTime = 20
+									print "[-] Impossible to determine the delay time. Using " + str(defTime) + " seconds."
 							userNames = prepareUserNames(userFile,vari)            
 							for userName in userNames:
 								sock = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
@@ -216,8 +221,12 @@ def main():
 
 						if argus.delay == None:
 							delay=dummySSH(host,port,length)
-							defTime=delay*10
-							print "[+] Using a delay of " + str(defTime) + " seconds."
+							if delay != None or delay != 0:
+								defTime=delay*10
+								print "[+] Using a delay of " + str(defTime) + " seconds."
+							else:
+								defTime = 20
+								print "[-] Impossible to determine the delay time. Using " + str(defTime) + " seconds."
 
 						userNames = prepareUserNames(userFile,vari)            
 						for userName in userNames:
@@ -247,9 +256,12 @@ def main():
 							print '==============================================================================='
 							if argus.delay == None:
 								delay=dummySSH(host,port,length)
-								defTime=delay*10
-								print "[+] Using a delay of " + str(defTime) + " seconds."
-
+								if delay != None or delay !=0:
+									defTime=delay*10
+									print "[+] Using a delay of " + str(defTime) + " seconds."
+								else:
+									defTime = 20
+									print "[-] Impossible to determine the delay time. Using " + str(defTime) + " seconds."
 							if vari == 'yes':
 								userNames =  createUserNameVariationsFor(user)
 								userNames = list(set(userNames))
@@ -278,8 +290,12 @@ def main():
 
 							if argus.delay == None:
 								delay=dummySSH(host,port,length)
-								defTime=delay*10
-								print "[+] Using a delay of " + str(defTime) + " seconds."
+								if delay != None or delay != 0:
+									defTime=delay*10
+									print "[+] Using a delay of " + str(defTime) + " seconds."
+								else:
+									defTime = 20
+									print "[-] Impossible to determine the delay time. Using " + str(defTime) + " seconds."
 
 							userNames =  createUserNameVariationsFor(user)
 							userNames = list(set(userNames))
@@ -293,8 +309,12 @@ def main():
 
 							if argus.delay == None:
 								delay=dummySSH(host,port,length)
-								defTime=delay*10
-								print "[+] Using a delay of " + str(defTime) + " seconds."
+								if delay != None or delay != 0:
+									defTime=delay*10
+									print "[+] Using a delay of " + str(defTime) + " seconds."
+								else:
+									defTime = 20
+									print "[-] Impossible to determine the delay time. Using " + str(defTime) + " seconds."
 
 							sock = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 							fUser = sshTime(host,port,user,sock,defTime,length)
