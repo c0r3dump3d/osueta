@@ -49,7 +49,8 @@ Advice:
 Installing:
 ===========
 
-        # apt-get install python-ipy python-nmap python-paramiko
+        # apt-get install python-ipy python-nmap 
+        # pip install paramiko
         # git clone https://github.com/c0r3dump3d/osueta.git 
 
 
