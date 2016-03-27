@@ -198,7 +198,8 @@ def prevScann(host,port):
 	try:
 		scanp = subprocess.Popen(["nmap","-T5","-n","-PN",nport,host],stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()[0]
 	except OSError:
-        	print "[-] Install nmap: sudo apt-get install nmap"  
+        	print "[-] Install nmap: sudo apt-get install nmap" 
+        	exit(1)
 	scanhost = scanp.split()
 	if 'open' in scanhost:
 		print 'port ' + port + ' open.'
