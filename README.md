@@ -32,7 +32,7 @@ What's OSUETA?
         http://www.devconsole.info/?p=493
         http://www.devconsole.info/?p=782
         
-    	The bug was corrected in version 7.3:
+    	The bug was corrected in OpenSSH version 7.3:
     	http://www.openssh.com/txt/release-7.3
 
 Authors:
