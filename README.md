@@ -24,13 +24,8 @@ What's OSUETA?
         present in OpenSSH versions <= 7.2 and >= 5.* . The script has the ability to make variations
         of the username employed in the bruteforce attack, and the possibility to establish
         a DOS condition in the OpenSSH server. 
-
-        http://cureblog.de/openssh-user-enumeration-time-based-attack/
+	
         http://seclists.org/fulldisclosure/2013/Jul/88 
-        http://www.devconsole.info/?p=341
-        http://www.devconsole.info/?p=382
-        http://www.devconsole.info/?p=493
-        http://www.devconsole.info/?p=782
         
     	The bug was corrected in OpenSSH version 7.3:
     	http://www.openssh.com/txt/release-7.3
