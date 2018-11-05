@@ -43,14 +43,22 @@ Advice:
 
 	Like others offensive tools, the authors disclaims all responsibility in the use of this script.
 
+Dependencies:
+=============
+
+Debian:
+
+        # apt-get install python-ipy python-nmap 
+        # pip install paramiko
+
+ArchLinux:
+
+	# pacman -S python2-ipy python2-nmap python2-paramiko
 
 Installing:
 ===========
 
-        # apt-get install python-ipy python-nmap 
-        # pip install paramiko
-        # git clone https://github.com/c0r3dump3d/osueta.git 
-
+        $ git clone https://github.com/c0r3dump3d/osueta.git 
 
 Usage:
 ======
