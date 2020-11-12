@@ -50,6 +50,7 @@ Debian:
 
         # apt-get install python-ipy python-nmap 
         # pip install paramiko
+	# pip install IPy
 
 ArchLinux:
 
