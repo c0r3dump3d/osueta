@@ -7,7 +7,6 @@ Version 0.8
 
 A simple Python2 script to exploit the OpenSSH User Enumeration Timing Attack:
 
-	http://cureblog.de/openssh-user-enumeration-time-based-attack/
 	http://seclists.org/fulldisclosure/2013/Jul/88 
 
 Authors:
