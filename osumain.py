@@ -208,7 +208,7 @@ def main():
                                         if argus.delay == None:
                                                 delay=dummySSH(host,port,length)
                                                 if delay != None or delay != 0:
-                                                        defTime=delay*10
+                                                        defTime=delay*5
                                                         print "[+] Using a delay of " + str(defTime) + " seconds."
                                                 else:
                                                         defTime = 20
