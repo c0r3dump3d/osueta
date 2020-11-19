@@ -294,7 +294,6 @@ def welcome():
         *                              |___/                                      *
         *                                                                         *
         *                                                                         *
-        *       http://cureblog.de/openssh-user-enumeration-time-based-attack/    *
         *       http://seclists.org/fulldisclosure/2013/Jul/88                    *
         *                                                                         *
         ***************************************************************************
